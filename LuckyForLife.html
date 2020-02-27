@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<title>Lucky for Life</title>
+    <style type="text/css">
+    	html,body,input {font-size:30px; font-family: Garamond, Times, Helvetica, Arial;}
+    	body {background-color: #A7C5A4;}
+    	hr.rounded {border-top: 2px solid; border-radius: 2px; border-color: #36401d}
+    	h1 {font-size: 42px; text-align: center;}
+    	h3 {font-size: 30px;}
+    	p {font-size: 25px;}
+    </style>
+
+    <script language="javascript">
+
+    	var winningNums = [];
+		function getRand(minValue, maxValue)
+		{
+			range = maxValue - minValue;
+			n = Math.random() * range + minValue;
+			n = parseInt(n);
+			return n;
+		}
+
+		n1 = getRand(1, 48);
+		n2 = getRand(1, 48);
+		n3 = getRand(1, 48);
+		n4 = getRand(1, 48);
+		n5 = getRand(1, 48);
+		luckyNum = getRand(1, 18);
+
+		winningNums = [n1, n2, n3, n4, n5];
+		winningNumsSorted = winningNums;
+
+		function checkDups() 
+		{
+			for (var i = 1; i < 5; i++) {
+				var temp = winningNums[i];
+				while (winningNums.indexOf(temp) != -1) {
+					temp = getRand(1,48);
+				}
+				winningNums[i] = temp
+			}
+		}
+
+		function printNums(winningNums)
+		{
+			checkDups();
+			document.getElementById("winner").innerHTML ="Today's winning numbers are: ";
+			for (var i = 0; i < winningNums.length; i++)
+			{
+				document.getElementById("winner").innerHTML += winningNums[i] + " ";
+			}
+			document.getElementById("winner").innerHTML += luckyNum;
+		}
+
+		function sort(winningNumsSorted)
+		{
+			for (var i = 0; i < winningNumsSorted.length; i++) {
+				for (var j = i + 1; j < winningNumsSorted.length; j++) {
+					if (winningNumsSorted[i] > winningNumsSorted[j]) {
+						var temp = winningNumsSorted[i];
+						winningNumsSorted[i] = winningNumsSorted[j];
+						winningNumsSorted[j] = temp;
+					}
+				}
+			}	
+			document.getElementById("winnerSorted").innerHTML ="The sorted winning numbers are: ";
+			for (var i = 0; i < winningNumsSorted.length; i++) {
+				document.getElementById("winnerSorted").innerHTML += winningNums[i] + " ";
+			}
+			document.getElementById("winnerSorted").innerHTML += luckyNum;
+		}
+
+		function parse()
+		{
+			var isLucky = false;
+			var numMatches = 0;
+
+			var fiveNums = document.getElementById("five").value;
+			var splitFiveNums = fiveNums.split(" ");
+			var lucky = document.getElementById("lucky").value;
+
+			for (var i = 0; i < splitFiveNums.length; i++) {
+				for (var j = 0; j < winningNums.length; j++) {
+					if (splitFiveNums[i] == winningNums[j]) {
+						winningNums.splice(j, 1);
+						numMatches++;
+					}
+				}
+			}
+
+			// check lucky ball
+			if (lucky == luckyNum)
+			{
+				isLucky = true;
+			}
+
+			calculatePayout(isLucky, numMatches);
+		}
+
+		function calculatePayout(luck, matches)
+		{
+			if (matches == 5 && luck == true) {
+				document.getElementById("payout").innerHTML = "You won $7,000 a WEEK for LIFE!"
+			}
+			else if (matches == 5 && luck == false) {
+				document.getElementById("payout").innerHTML = "You won $25,000 a YEAR for LIFE!"
+			}
+			else if (matches == 4 && luck == true) {
+				document.getElementById("payout").innerHTML = "You won $5,000!!"
+			}
+			else if (matches == 4 && luck == false) {
+				document.getElementById("payout").innerHTML = "You won $200!"
+			}
+			else if (matches == 3 && luck == true) {
+				document.getElementById("payout").innerHTML = "You won $150!"
+			}
+			else if (matches == 3 && luck == false) {
+				document.getElementById("payout").innerHTML = "You won $20!"
+			}
+			else if (matches == 2 && luck == true) {
+				document.getElementById("payout").innerHTML = "You won $25!"
+			}
+			else if (matches == 2 && luck == false) {
+				document.getElementById("payout").innerHTML = "You won $3!"
+			}
+			else if (matches == 1 && luck == true) {
+				document.getElementById("payout").innerHTML = "You won $6!"
+			}
+			else if (matches == 0 && luck == true) {
+				document.getElementById("payout").innerHTML = "You won $4!"
+			}
+			else {
+				document.getElementById("payout").innerHTML = "You did not win anything. Better luck next time!"
+			}
+		}
+
+
+	</script>
+
+</head>
+
+
+
+<body>
+
+	<h1>Mass Lottery Presents:</h1>
+	<p style="text-align: center; font-size: 30px">Lucky for Life!</p>
+	</br>
+	<div id = "winner"></div>
+	<div id="winnerSorted"></div>
+
+	<script type="text/javascript">
+		printNums(winningNums)
+		sort(winningNumsSorted)
+	</script>
+
+	<hr class="rounded">
+
+	<form name="form1">
+		Five numbers: &nbsp;&nbsp;
+		<input type="text" id="five" name="five">
+		</br>
+		Lucky ball: &nbsp;&nbsp;
+		<input type="text" id="lucky" name="lucky">
+		</br>
+		<input type="button" value="Submit" onclick="parse()">
+
+
+		<hr class="rounded">
+		<h3>Your Payout:</h3>
+		<div id="payout"></div>
+
+		</br>
+	</form>
+
+</body>
+
+</html>
