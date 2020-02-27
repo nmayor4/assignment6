@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<title>Amicable Numbers</title>
+    <style type="text/css">
+        html,body,input {font-size:30px; font-family: Garamond, Times, Helvetica, Arial;}
+        body {background-color: #becfcb;}
+        hr.rounded {border-top: 2px solid; border-radius: 2px; color: #2D6152; border-color: #2D6152}
+        h1 {font-size: 42px; text-align: center;}
+        h3 {font-size: 30px;}
+        p {font-size: 25px;}
+        input[type=button] {width: 120px; background-color: #558879; cursor: pointer;}
+        input[type=text], select {width: 120px; padding: 12px 20px; margin: 8px 0; display: inline-block;}
+    </style>
+
+    <script language="javascript">
+        
+        var one, two;
+        function displayNums()
+        {
+            one = document.getElementById("first").value;
+            two = document.getElementById("second").value;
+
+            document.getElementById("num1").innerHTML = "Factors of " + one + ": ";
+            document.getElementById("num2").innerHTML = "Factors of " + two + ": ";
+        }
+
+        // is a factor if remainder is 0
+        function isFactor(num, testNum)
+        {
+            var remainder = num % testNum;
+            return (remainder == 0);
+        }
+
+        function showFactors(factors, div)
+        {
+            for (var i = 0; i < factors.length; i++)
+            {
+                document.getElementById(div).innerHTML += factors[i] + " ";
+            }
+        }
+
+        function addFactors(nums)
+        {
+            var sum = 0;
+            for (var i = 0; i < nums.length; i++)
+            {
+                sum += nums[i];
+            }
+            return sum;
+        }
+
+        function getFactors(number, div)
+        {
+            var allFactors = [];
+            for (var i = 0; i < number; i++) 
+            {
+                if ((number % i) == 0)
+                {
+                    allFactors.push(i);
+                }
+            }
+            return allFactors;
+        }
+
+        function checkAmicability()
+        {
+            displayNums();
+
+            var firstFactors = getFactors(one, num1);
+            var secondFactors = getFactors(two, num2);
+
+            var sum1 = addFactors(firstFactors);
+            var sum2 = addFactors(secondFactors);
+
+            showFactors(firstFactors, "num1");
+            showFactors(secondFactors, "num2");
+
+            // Check of sum calculation
+            // document.getElementById("num1").innerHTML += ". Sum = " + sum1;
+            // document.getElementById("num2").innerHTML += ". Sum = " + sum2;
+
+            if (sum1 == two && sum2 == one) {
+                document.getElementById("amicable").innerHTML = (one + " and " + two + " are amicable!").bold();
+            }
+            else {
+                document.getElementById("amicable").innerHTML = (one + " and " + two + " are NOT amicable.").bold();
+            }
+        }
+    
+	</script>
+
+</head>
+
+<body>
+
+    <h1>Amicable Numbers</h1>
+    <p style="text-align: center; font-size: 25px">Definition: A pair of numbers are called amicable if their factors (excluding themselves) add up to each other.</p>
+
+    <p style="text-align: center"> Check if two numbers are amicable: </p>
+
+    <form name="form1" style="text-align: center">
+        1. &nbsp;&nbsp;
+        <input type="text" id="first" name="first">
+        </br>
+        2. &nbsp;&nbsp;
+        <input type="text" id="second" name="second">
+        </br></br>
+        <input type="button" value="Check" onclick="checkAmicability()">
+        </br></br>
+
+        <hr class="rounded">
+        <h3>Results:</h3>
+        <div id="num1"></div>
+        <div id="num2"></div>
+        </br>
+
+        <div id="amicable"></div>
+        </br>
+
+
+    </form>
+
+
+    <!-- Test code from here down -->
+
+    <!-- <script>
+        // Test of isFactor function
+        if (isFactor(4, 2))
+        {
+            document.write("2 is a factor of 4! ")
+        }
+        else
+        {
+            document.write("2 is not a factor of 4! ")
+        }
+
+
+        if (isFactor(27, 13))
+        {
+            document.write("13 is a factor of 27! ")
+        }
+        else
+        {
+            document.write("13 is not a factor of 27! ")
+        }
+
+        if (isFactor(522, 9))
+        {
+            document.write("9 is a factor of 522! ")
+        }
+        else
+        {
+            document.write("9 is not a factor of 522! ")
+        }
+
+    </script> -->
+
+    <!-- <div id="facs"></div>
+    <script>
+        // Test of showFactors function
+        var factors = [1, 2, 4, 9, 15];
+        showFactors(factors, "facs");
+
+    </script> -->
+
+
+    <!-- <script>
+        // Test of addFactors function
+        var nums = [1, 2, 3, 4, 15];
+        document.write("The sum of the factors is: " + addFactors(nums));
+    </script> -->
+        
+    <!-- <div id="factorsofn"></div>
+    <script>
+        // Test of getFactors function
+        var number = 100;
+        document.getElementById("factorsofn").innerHTML = ("The factors of " + number + " are: ");
+        showFactors(getFactors(number), "factorsofn");
+    </script> -->
+
+</body>
+
+</html>
